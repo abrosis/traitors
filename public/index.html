@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <!-- <link rel="manifest" href="/manifest.json"> -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Game Show">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script defer type="application/javascript" src="hue.js"></script>
+    <script defer type="application/javascript" src="drawing.js"></script>
+    <script defer type="application/javascript" src="public.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>The Traitors</title>
+</head>
+<body>
+
+
+<game id="playerName" data-audio="main">
+  <screen class="active" data-enter="playerName" data-id="0">
+    <page data-id="0">
+
+      <img src="images/logo.png" class="splashLogo animate__animated animate__zoomIn" />
+
+      <h1>Enter your name</h1>
+      <input type="text" class="playerName"  placeholder="Your name please...">
+      <input type="file" id="photoUpload" class="photoUpload" accept="image/*" capture="user">
+      <button class="btn addPlayer">Submit</button> 
+
+      <img src="images/qr.jpg" class="qr animate__animated animate__zoomIn" />
+    </page>
+
+    <page data-id="1">
+
+      <img src="images/logo.png" class="splashLogo animate__animated animate__zoomIn" />
+      <div class="playerPortrait animate__animated animate__zoomIn" id="playerPortrait"></div>
+      <h1>Waiting for other players...</h1>
+    </page>
+  </screen>
+</game>
+
+<game id="start" data-audio="main">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="gamelogo">
+        <img src="images/start-logo-3.png" class="animate__animated animate__bounceIn  animate__delay-3s" />
+        <img src="images/start-logo-2.png"  class="animate__animated animate__bounceInUp animate__delay-1s" />
+        <img src="images/start-logo-1.png"  class="animate__animated animate__zoomIn" />
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="playerboard" data-enter="generatePlayerboard"  data-audio="breakfast">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <h1 class="mobileonly">Please view the screen</h1>
+      <div class="playerboard">
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="breakfast" data-enter="generatePlayerboard"  data-audio="breakfast">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait">
+        <img src="images/breakfast.png"  class="animate__animated animate__fadeIn" />
+      </div>
+    </page>
+  </screen>
+  <screen class="" data-id="1">
+    <page data-id="0">
+      <h1 class="mobileonly">Please view the screen</h1>
+      <div class="playerboard">
+      </div>
+    </page>
+  </screen>
+</game>
+
+
+<game id="mission" class="game"  data-audio="mission">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait">
+        <img src="images/mission.png"  class="animate__animated animate__fadeIn" />
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="dinner" class="game" data-audio="dinner">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait">
+        <img src="images/dinner.png"  class="animate__animated animate__fadeIn" />
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="roundtable" class="game"  data-enter="startRoundtable" data-audio="roundtable">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait">
+        <img src="images/roundtable.png"  class="animate__animated animate__fadeIn" />
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="vote" class="game"  data-enter="startVote" data-audio="vote">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+        <ul class="playerboard displayonly"></ul>
+        <h2 class="mobileonly">Please select a player</h2>
+        <ul  class="mobileonly voteforplayer">
+        </ul>
+    </page>
+    <page data-id="1">
+      <div id="chalkboard">
+        <canvas id="drawingCanvas" width="100%" height="100%"></canvas>
+        <div class="chalkboardbuttons">
+          <h2>Now write the name...</h2>
+          <button onclick="clearCanvas()" class="btn">Clear</button>
+          <button class="btn submitChalkboard">Submit</button>
+        </div>
+      </div>
+    </page>
+  </screen>
+</game>
+
+
+<game id="banishment" class="game"  data-enter="generatePlayerboard" data-audio="roundtable">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <ul class="playerboard showVotes displayonly"></ul>
+      <h2 class="mobileonly">Please view the screen</h2>
+    </page>
+  </screen>
+</game>
+
+<game id="bedtime" class="game" data-audio="bedtime">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait">
+        <img src="images/bedtime.png"  class="animate__animated animate__fadeIn" />
+      </div>
+    </page>
+  </screen>
+</game>
+
+<game id="murder1" class="game" data-enter="startMurderVideo" data-audio="bedtime">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait displayonly">
+        <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
+        <video class="murdervideo" src="/video/murder-1.mp4" loop muted></video>
+      </div>
+      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+    </page>
+  </screen>
+</game>
+
+<game id="murder2" class="game" data-enter="startMurderVideo" data-audio="bedtime">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait displayonly">
+        <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
+        <video class="murdervideo" src="/video/murder-2.mp4" muted></video>
+      </div>
+      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+    </page>
+  </screen>
+</game>
+
+<game id="murder3" class="game" data-enter="startMurderVideo" data-audio="bedtime">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait displayonly">
+        <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
+        <video class="murdervideo" src="/video/murder-3.mp4" muted></video>
+      </div>
+      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+    </page>
+  </screen>
+</game>
+
+  <game id="firepit" class="game"  data-enter="startPit" data-audio="firepit">
+    <screen class="active" data-id="0">
+      <page data-id="0">
+        <div class="portrait">
+          <img src="images/firepit.png"  class="animate__animated animate__fadeIn" />
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1">
+      <page data-id="0">
+        <video class="displayonly" src="/video/firepit.mp4" loop muted></video>
+        <h1 class="mobileonly deadonly">Please watch the screen</h1>
+        <img src="images/end.png" class="mobileonly bag bag-end animate__animated animate__zoomIn" />
+        <img src="images/continue.png"  class="mobileonly bag bag-continue animate__animated animate__zoomIn animate__delay-1s" />
+      </page>
+    </screen>
+  </game>
+
+</body>
+</html>

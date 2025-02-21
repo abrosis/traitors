@@ -1,0 +1,146 @@
+{
+    "1": {
+        "question": {
+            "type": "text",
+            "content": "Jingle Bells was originally a song for Thanksgiving."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": true
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": false
+            }
+        }
+    },
+    "2": {
+        "question": {
+            "type": "text",
+            "content": "Poinsettia plants are poisonous to pets and small children."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": false
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": true
+            }
+        }
+    },
+    "3": {
+        "question": {
+            "type": "text",
+            "content": "The first artificial Christmas trees were made from surplus toilet brushes."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": false
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": true
+            }
+        }
+    },
+    "4": {
+        "question": {
+            "type": "text",
+            "content": "The official music video for \"Rockin' around the Christmas Tree\" by Brenda Lee was released in 2023."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": true
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": false
+            }
+        }
+    },
+    "5": {
+        "question": {
+            "type": "text",
+            "content": "The \"nog\" in Eggnog is derived from \"Noggin\", in reference to the affect the alcohol had on Women's heads."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": false
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": true
+            }
+        }
+    },
+    "6": {
+        "question": {
+            "type": "text",
+            "content": "The Queen's Christmas Speech had the highest Christmas viewing figures for Christmas 2022."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": false
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": true
+            }
+        }
+    },
+    "7": {
+        "question": {
+            "type": "text",
+            "content": "Avatar: The Way of Water was the box office number one for Christmas 2022."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": true
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": false
+            }
+        }
+    },
+    "8": {
+        "question": {
+            "type": "text",
+            "content": "In Estonia, it’s traditional for the whole family to take a sauna together on Christmas Eve."
+        },
+        "answers": {
+            "1": {
+                "type": "text",
+                "content": "True",
+                "correct": true
+            },
+            "2": {
+                "type": "text",
+                "content": "False",
+                "correct": false
+            }
+        }
+    }
+}
