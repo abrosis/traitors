@@ -33,22 +33,23 @@
 <body>
 
 
-<game id="playerName" data-audio="main">
+<game id="playerName">
   <screen class="active" data-enter="playerName" data-id="0">
     <page data-id="0">
 
-      <img src="images/logo.png" class="splashLogo animate__animated animate__zoomIn" />
+      <img src="images/logo.png" class="splashLogo mobileonly animate__animated animate__zoomIn" />
 
-      <h1>Enter your name</h1>
-      <input type="text" class="playerName"  placeholder="Your name please...">
-      <input type="file" id="photoUpload" class="photoUpload" accept="image/*" capture="user">
-      <button class="btn addPlayer">Submit</button> 
+      <h1 class="mobileonly">Enter your name</h1>
+      <input type="text" class="playerName mobileonly"  placeholder="Your name please...">
+      <input type="file" id="photoUpload" class="photoUpload mobileonly" accept="image/*" capture="user">
+      <button class="btn addPlayer mobileonly">Submit</button> 
 
-      <img src="images/qr.jpg" class="qr animate__animated animate__zoomIn" />
+      <div class="portrait displayonly">
+        <img src="images/start.png"  class="animate__animated animate__fadeIn" />
+      </div>
     </page>
 
     <page data-id="1">
-
       <img src="images/logo.png" class="splashLogo animate__animated animate__zoomIn" />
       <div class="playerPortrait animate__animated animate__zoomIn" id="playerPortrait"></div>
       <h1>Waiting for other players...</h1>
@@ -56,14 +57,14 @@
   </screen>
 </game>
 
-<game id="start" data-audio="main">
+<game id="start" data-enter="playStartVideo" data-audio="main">
   <screen class="active" data-id="0">
-    <page data-id="0">
-      <div class="gamelogo">
-        <img src="images/start-logo-3.png" class="animate__animated animate__bounceIn  animate__delay-3s" />
-        <img src="images/start-logo-2.png"  class="animate__animated animate__bounceInUp animate__delay-1s" />
-        <img src="images/start-logo-1.png"  class="animate__animated animate__zoomIn" />
-      </div>
+    <page class="logo" data-id="0">
+        <video src="video/traitors.mp4" class="displayonly"  muted loop></video>
+        <img src="images/logo.png" class="displayonly animate__animated animate__zoomIn animate__delay-3s" />
+
+        <h1 class="mobileonly">Please turn on rotate lock.</h1>
+        <h1 class="mobileonly">Make sure you're connected to WiFi.</h1>
     </page>
   </screen>
 </game>
@@ -79,7 +80,7 @@
 </game>
 
 <game id="breakfast" data-enter="generatePlayerboard"  data-audio="breakfast">
-  <screen class="active" data-id="0">
+  <screen class="active" data-audio="doorknock" data-id="0">
     <page data-id="0">
       <div class="portrait">
         <img src="images/breakfast.png"  class="animate__animated animate__fadeIn" />
@@ -106,7 +107,7 @@
   </screen>
 </game>
 
-<game id="dinner" class="game" data-audio="dinner">
+<game id="dinner" class="game" data-audio="breakfast">
   <screen class="active" data-id="0">
     <page data-id="0">
       <div class="portrait">
@@ -220,6 +221,123 @@
       </page>
     </screen>
   </game>
+
+
+
+  <game id="blackelephant" class="game">
+    <screen class="active" data-id="0" data-audio="blackelephant">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-blackelephant.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Black Elephant</H2>
+          <p>Players, you will each pick a box.</p>
+          <p>In 4 boxes are gold coins, each equalling 1,000 pounds. In another 4 boxes are red coins, which will each deduct 1,000 pounds from your total. 2 boxes contain green coins which will give the players holding it shields.</p>
+          <p>For 2 rounds, you will choose to either reveal a box to remove it from the game, or steal another players box to trade it with yours.</p>
+          <p>Players must not say what is inside their box.</p>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+
+  <game id="traitorshunt" class="game">
+    <screen class="active" data-id="0" data-audio="traitorshunt">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-traitorshunt.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Traitor's Hunt</H2>
+          <p>Players, you will be given a riddle. This riddle will give you a location.</p>
+          <p>At each location will be two riddles. Split off into teams and solve the next riddle.</p>
+          <p>At the end of the hunt, you will find a cash amount, or a shield. </p>
+          <p>Bring it back before the timer runs out. You have 20 minutes.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="playCharlotteVideo">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-traitorshunt.png"  class="animate__animated" />
+        </div>
+        <video class="charlotte" src="video/charlotte.mp4"></video>
+        <h2 class="firstclue">Above the lake, where we cleanse our slates, lies another clue behind your hanging face...</h2>
+      </page>
+    </screen>
+    <screen data-id="2" data-enter="timer" data-time="10">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Time Left:</H2>
+          <h1>10:00</h1>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+  <game id="bangyouredead" class="game">
+    <screen class="active" data-id="0" data-audio="bangyouredead">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-bangyouredead.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Bang! You're Dead</H2>
+          <p>Players, blindfold yourselves. For 5 rounds, two players will be picked to mark a player.</p>
+
+          <p>The marked player will then get to guess one of the players who marked them.</p>
+          <p>If correct, they can either pop that players balloon or risk guessing the other player that marked them and pop both their balloons.</p>
+
+          <p>Any players left with a balloon will be saved from murder tonight.</p>
+
+          <p>For every correct guess, you will win £2,000.</p>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+  <game id="resurrection" class="game">
+    <screen class="active" data-id="0" data-audio="resurrection">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-resurrection.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Resurrection</H2>
+          <p>Players, hidden across the castle are QR codes. Each can be scanned once with your device to obtain a coin to give to a deceased player.</p>
+          <p>There is 1 shield hidden - this is your chance to get to the final faithful, don't let the traitors win. </p>
+          <p>The 2 deceased players with the most coins by the end of the game will be resurrected. You have 5 minutes - their lives count on it.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="timer" data-time="5">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Time Left:</H2>
+          <h1>5:00</h1>
+        </div>
+      </page>
+    </screen>
+  </game>
+    
+
+  <game id="betrayl" class="game">
+    <screen class="active" data-id="0" data-audio="betrayl">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-betrayl.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Betrayl</H2>
+          <p>Players you will be asked 5 questions about the finalists. Banished or murdered players will secretly vote for which finalist they think is the answer to the question.</p>
+          <p> The finalists will then select who they think is the answer.</p> 
+          <p>For every correct match, you will win £2,000.</p>
+        </div>
+      </page>
+    </screen>
+  </game>
+    
 
 </body>
 </html>

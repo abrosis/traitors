@@ -99,6 +99,11 @@ function changeScreen(screen) {
   $('game:visible screen[data-id="' + screen + '"]').addClass('active');
 
   let enterFunction = $('game:visible screen.active').attr('data-enter');
+  let enterAudio = $('game:visible screen.active').attr('data-audio');
+
+  if(enterAudio)  {
+    playSoundFX(enterAudio);
+  }
 
   if(enterFunction) {
     window[enterFunction]();
@@ -284,10 +289,24 @@ function playAudio(bgAudio) {
   if(bgAudioPlayer) { bgAudioPlayer.pause(); }
   bgAudioPlayer = new Audio('audio/' + bgAudio + '.mp3');
   bgAudioPlayer.play();
-  if(bgAudio == 'bg'){
-    bgAudioPlayer.loop = true;
+  bgAudioPlayer.loop = true;
+  bgAudioPlayer.volume = 1;
+}
+
+let fxAudioPlayer = null;
+function playSoundFX(bgAudio) {
+  if(!displayMode) { return; }
+  if(fxAudioPlayer) { fxAudioPlayer.pause(); }
+  fxAudioPlayer = new Audio('audio/' + bgAudio + '.mp3');
+  fxAudioPlayer.play();
+  if (bgAudioPlayer) {
     bgAudioPlayer.volume = 0.5;
   }
+  fxAudioPlayer.onended = function() {
+    if (bgAudioPlayer) {
+      bgAudioPlayer.volume = 1;
+    }
+  };
 }
 
 function startPit() {
@@ -363,6 +382,64 @@ function startMurderVideo() {
       $(videoElement).fadeIn(10000, function() {
         videoElement.play();
       });
+    }
+  }
+}
+
+let intervalId = null;
+
+function timer(){
+  let countdown = parseInt($('game:visible screen.active').attr('data-time')) * 60;
+
+  if(intervalId){
+    clearInterval(intervalId);
+  }
+
+  intervalId = setInterval(() => {
+    countdown--;
+
+    const minutes = Math.floor(countdown / 60);
+    const seconds = countdown % 60;
+
+    $('game:visible screen.active .countdown h1').text(`0${minutes} : ${seconds < 10 ? '0' : ''}${seconds}`);
+
+    if (countdown === 0) {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+}
+
+function playCharlotteVideo(){
+  if (displayMode) {
+    if (bgAudioPlayer) {
+      bgAudioPlayer.volume = 0;
+    }
+
+    let videoElement = $('game:visible screen.active video').get(0);
+    if (videoElement) {
+      $(videoElement).fadeIn(5000, function() {
+        videoElement.play();
+      });
+
+      videoElement.onended = function() {
+        if (bgAudioPlayer) {
+          bgAudioPlayer.volume = 1;
+        }
+        $(videoElement).fadeOut(2000);
+        $('.firstclue').fadeIn();
+      };
+    }
+  }
+}
+
+function playStartVideo() {
+  if (displayMode) {
+    let videoElement = $('game:visible screen.active video').get(0);
+    if (videoElement) {
+      videoElement.play();
+      setTimeout(() => {
+        videoElement.pause();
+      }, 120000); // 2 minutes in milliseconds
     }
   }
 }

@@ -1,12 +1,33 @@
 // server.js
 const express = require('express');
-const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
+const cors = require('cors');
+// const isLive = false;
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+// if(isLive) {
+//   const http = require('http');
+//   const app = express();
+//   const server = http.createServer(app);
+//   const io = socketIo(server, {
+//       cors: {
+//           origin: "https://abrosis.com",
+//           methods: ["GET", "POST"]
+//       }
+//   });
+  
+//   app.use(cors({ origin: "https://abrosis.com" }));
+// }else{
+  
+  const http = require('http');
+  const app = express();
+  const server = http.createServer(app);
+  const io = socketIo(server);
+  
+  app.use(express.static('public'));
+// }
+
+
 
 let players = {};
 let gamePosition = {    
@@ -17,7 +38,6 @@ let gamePosition = {
 };
 
 
-app.use(express.static('public'));
 
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -146,6 +166,8 @@ function startGame(game){
       Object.keys(players).forEach((id) => {
         players[id].votes = 0;
       });
+      
+      io.emit('updatePlayers', players);
     }
 
     io.emit('gameStart', gamePosition);
