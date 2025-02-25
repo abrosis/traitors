@@ -126,10 +126,12 @@
 
 
   <fieldset>
-    <legend>Controls:</legend>
+    <legend>Prize total: £0</legend>
     <button onclick="getPlayers()"> Update Players </button>
     <button onclick="clearPlayers()"> Clear Players </button>
     <button onclick="nextScreen()"> Next Screen </button>
+    <button onclick="addMoney()"> Add money </button>
+    <button onclick="removeMoney()"> Remove money </button>
   </fieldset>
 
 
@@ -145,7 +147,8 @@
   <button data-command="dinner">Dinner</button>
   <button data-command="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="banishment">Banishment</button>//TODO
+  <button data-command="banishment">Banishment</button>
+  <button data-command="prizetotal">Prize total</button>
   <button data-command="bedtime">Bedtime</button>
 </div>
 </details>
@@ -161,7 +164,8 @@
   <button data-command="dinner">Dinner</button>
   <button data-command="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="banishment">Banishment</button>//TODO
+  <button data-command="banishment">Banishment</button>
+  <button data-command="prizetotal">Prize total</button>
   <button data-command="murder1">Murder</button>
 </div>
 </details>
@@ -171,11 +175,12 @@
   <button data-command="breakfast">Breakfast</button>
   <button onclick="nextScreen()">Playerboard</button>
   <button data-command="mission">Mission</button>
-  <button data-command="bangyouredead">GAME 3: Bang You're Dead</button> //TODO
+  <button data-command="bangyouredead">GAME 3: Bang You're Dead</button>
   <button data-command="dinner">Dinner</button>
   <button data-command="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="banishment">Banishment</button>//TODO
+  <button data-command="banishment">Banishment</button>
+  <button data-command="prizetotal">Prize total</button>
   <button data-command="murder2">Murder</button>
 </div>
 </details>
@@ -191,7 +196,8 @@
   <button data-command="dinner">Dinner</button>
   <button data-command="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="banishment">Banishment</button>//TODO
+  <button data-command="banishment">Banishment</button>
+  <button data-command="prizetotal">Prize total</button>
   <button data-command="murder3">Murder</button>
 </div>
 </details>
@@ -205,11 +211,11 @@
   <button data-command="dinner">Dinner</button>
   <button data-command="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="final">The Final</button>
-  <button data-command="firepit">Fire pit</button>
-  <button onclick="nextScreen()">Start fire</button>
-  <button data-command="vote">Vote</button>
-  <button data-command="winner">Winner</button>//TODO
+  <button data-command="firepit">The Final</button>
+  <button onclick="nextScreen()">Start fire pit</button>
+  <button onclick="prevPage()">New fire round</button>
+  <button data-command="prizetotal">Prize total</button>
+  <button data-command="start">Winner</button>
   </div>
 </details>
 </main>

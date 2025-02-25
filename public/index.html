@@ -39,7 +39,7 @@
 
       <img src="images/logo.png" class="splashLogo mobileonly animate__animated animate__zoomIn" />
 
-      <h1 class="mobileonly">Enter your name</h1>
+      <h1 class="mobileonly">Enter your name & photo</h1>
       <input type="text" class="playerName mobileonly"  placeholder="Your name please...">
       <input type="file" id="photoUpload" class="photoUpload mobileonly" accept="image/*" capture="user">
       <button class="btn addPlayer mobileonly">Submit</button> 
@@ -52,7 +52,7 @@
     <page data-id="1">
       <img src="images/logo.png" class="splashLogo animate__animated animate__zoomIn" />
       <div class="playerPortrait animate__animated animate__zoomIn" id="playerPortrait"></div>
-      <h1>Waiting for other players...</h1>
+      <h1 class="animate__animated animate__zoomIn animate__delay-1s">Waiting for other players...</h1>
     </page>
   </screen>
 </game>
@@ -117,7 +117,7 @@
   </screen>
 </game>
 
-<game id="roundtable" class="game"  data-enter="startRoundtable" data-audio="roundtable">
+<game id="roundtable" class="game"  data-audio="roundtable">
   <screen class="active" data-id="0">
     <page data-id="0">
       <div class="portrait">
@@ -137,10 +137,10 @@
     </page>
     <page data-id="1">
       <div id="chalkboard">
-        <canvas id="drawingCanvas" width="100%" height="100%"></canvas>
+        <canvas id="drawingCanvas" class="drawingCanvas" width="100%" height="100%"></canvas>
         <div class="chalkboardbuttons">
           <h2>Now write the name...</h2>
-          <button onclick="clearCanvas()" class="btn">Clear</button>
+          <button onclick="clearBoards()" class="btn">Clear</button>
           <button class="btn submitChalkboard">Submit</button>
         </div>
       </div>
@@ -149,10 +149,10 @@
 </game>
 
 
-<game id="banishment" class="game"  data-enter="generatePlayerboard" data-audio="roundtable">
+<game id="banishment" class="game"  data-enter="startBanishment" data-audio="banishment">
   <screen class="active" data-id="0">
     <page data-id="0">
-      <ul class="playerboard showVotes displayonly"></ul>
+      <ul class="playerboard displayonly"></ul>
       <h2 class="mobileonly">Please view the screen</h2>
     </page>
   </screen>
@@ -175,7 +175,7 @@
         <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
         <video class="murdervideo" src="/video/murder-1.mp4" loop muted></video>
       </div>
-      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+      <h1 class="mobileonly">Please put on your blindfold</h1>
     </page>
   </screen>
 </game>
@@ -187,7 +187,7 @@
         <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
         <video class="murdervideo" src="/video/murder-2.mp4" muted></video>
       </div>
-      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+      <h1 class="mobileonly">Please put on your blindfold</h1>
     </page>
   </screen>
 </game>
@@ -199,7 +199,7 @@
         <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
         <video class="murdervideo" src="/video/murder-3.mp4" muted></video>
       </div>
-      <h1 class="mobileonly deadonly">Please put on your blindfold</h1>
+      <h1 class="mobileonly">Please put on your blindfold</h1>
     </page>
   </screen>
 </game>
@@ -212,15 +212,39 @@
         </div>
       </page>
     </screen>
-    <screen data-id="1">
+    <screen data-id="1"  data-enter="clearBoards" >
       <page data-id="0">
         <video class="displayonly" src="/video/firepit.mp4" loop muted></video>
         <h1 class="mobileonly deadonly">Please watch the screen</h1>
         <img src="images/end.png" class="mobileonly bag bag-end animate__animated animate__zoomIn" />
         <img src="images/continue.png"  class="mobileonly bag bag-continue animate__animated animate__zoomIn animate__delay-1s" />
       </page>
+      <page data-id="1">
+        <div id="chalkboard">
+          <canvas id="drawingCanvas" class="drawingCanvas" width="100%" height="100%"></canvas>
+          <div class="chalkboardbuttons">
+            <h2>Now write the name...</h2>
+            <button onclick="clearBoards()" class="btn">Clear</button>
+            <button class="btn submitChalkboard">Submit</button>
+          </div>
+        </div>
+      </page>
     </screen>
   </game>
+
+
+
+  <game id="prizetotal" class="game" data-enter="prizeTotal"  data-audio="total">
+    <screen class="active" data-id="0">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Total Prize</H2>
+          <h1 class="prizeTotal">£0</h1>
+        </div>
+      </page>
+    </screen>
+  </game>
+
 
 
 

@@ -71,6 +71,13 @@ socket.on('gameUpdateforPlayer', (newGamePosition) => {
   }
 });
 
+
+socket.on('prevPageForPlayer', (newGamePosition) => {
+  if(!displayMode){
+    $('game:visible screen.active page').hide().prev().show();
+  }
+});
+
   
 /* Change Game */
 function changeGame(game, screen) {
@@ -323,23 +330,33 @@ function startPit() {
     $('#' + gamePosition.game + ' h1').show();
   }
 
-  $('.bag-continue').click(function() {
-    changeHueColor("Living room", "#FF0000", 3000);
-    socket.emit('gameContinue', playerId);
-  });
-
-  $('.bag-end').click(function() {
-    changeHueColor("Living room", "#00b300", 3000);
-    socket.emit('gameEnd', playerId);
-  });
-
 }
+
+$('.bag-continue').click(function() {
+  changeHueColor("Living room", "#FF0000", 3000);
+  socket.emit('gameContinue', playerId);
+  clearBoards();
+  nextPage();
+});
+
+$('.bag-end').click(function() {
+  changeHueColor("Living room", "#00b300", 3000);
+  socket.emit('gameEnd', playerId);
+  clearBoards();
+  nextPage();
+});
 
 function startVote(){
   $('.chalkboardbuttons').show();
-  $('#drawingCanvas').removeClass('disabled');
-  clearCanvas();
+  $('.drawingCanvas').removeClass('disabled');
+  $('game:visible .drawingCanvas')[0].clearCanvas();
   $('.voteforplayer').empty();
+
+  
+  $('.playerboard:visible').empty();
+  $.each(gamePosition.players, function(index, player) {
+    $('.playerboard:visible').append('<div class="playerCard animate__animated animate__fadeIn" style="animation-delay:'+index+'s;"><div class="playerPortraitBig player'+ (player.alive ? 'Alive' : 'Dead') +' "><img src="'+ player.photo+'" /></div><div class="playerNameplate">' + player.name + '</div></div>');
+  });
 
   if(!gamePosition.players) {
     socket.emit('getGameforPlayer', playerId);
@@ -354,17 +371,35 @@ function startVote(){
     }
   });
 
-  $('.voteforplayer').on('click', '[data-vote]', function() {
-    let playerId = $(this).data('vote');
-    if (confirm('Are you sure you want to vote for this player?')) {
-      socket.emit('voteForPlayer', playerId);
-      nextPage();
-    }
-  });
+}
 
-  $('.submitChalkboard').click(function(){
-    $('.chalkboardbuttons').fadeOut();
-    $('#drawingCanvas').addClass('disabled');
+function clearBoards() {
+  $('.chalkboardbuttons').show();
+  $('.drawingCanvas').removeClass('disabled');
+  $('game:visible .drawingCanvas')[0].clearCanvas();
+}
+function prizeTotal() {
+  $('.prizeTotal').html('£' + gamePosition.prizeTotal);
+}
+
+
+$('.voteforplayer').on('click', '[data-vote]', function() {
+  let playerId = $(this).data('vote');
+  if (confirm('Are you sure you want to vote for this player?')) {
+    socket.emit('voteForPlayer', playerId);
+    nextPage();
+  }
+});
+
+$('.submitChalkboard').click(function(){
+  $('.chalkboardbuttons').fadeOut();
+  $('.drawingCanvas').addClass('disabled');
+});
+
+function startBanishment() {
+  $('.playerboard:visible').empty();
+  $.each(gamePosition.players, function(index, player) {
+    $('.playerboard:visible').append('<div class="playerCard animate__animated animate__fadeIn" style="animation-delay:'+index+'s;"><div class="playerPortraitBig player'+ (player.alive ? 'Alive' : 'Dead') +' "><img src="'+ player.photo+'" /></div><div class="playerNameplate">' + player.name + ' - ' + player.votes + '</div></div>');
   });
 }
 

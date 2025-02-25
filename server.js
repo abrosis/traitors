@@ -33,6 +33,7 @@ let players = {};
 let gamePosition = {    
   game: 'playerName',
   players: {},
+  prizeTotal: 0,
   screen: 0,
   json: {},
 };
@@ -90,6 +91,16 @@ io.on('connection', (socket) => {
   socket.on('startGame', (game) => {
     startGame(game);
   });
+  
+  socket.on('addMoney', () => {
+    gamePosition.prizeTotal += 1000;
+    io.emit('updateMoney', gamePosition.prizeTotal);
+  });
+  
+  socket.on('removeMoney', () => {
+    gamePosition.prizeTotal -= 1000;
+    io.emit('updateMoney', gamePosition.prizeTotal);
+  });
 
   socket.on('getGame', () => {
     console.log('Updating user game position');
@@ -131,6 +142,9 @@ io.on('connection', (socket) => {
   socket.on('nextScreen', () => {
     nextScreen();
   });
+  socket.on('prevPage', () => {
+    prevPage();
+  });
 });
 
 
@@ -140,7 +154,7 @@ function startGame(game){
     gamePosition.players = players;
     gamePosition.screen = 0;
     gamePosition.json = {};
-    
+
     if(game == 'vote'){
       Object.keys(players).forEach((id) => {
         players[id].votes = 0;
@@ -149,7 +163,7 @@ function startGame(game){
     }
 
     if (game == 'firepit' || game == 'bedtime' || game == 'murder') {
-      let maxVotes = -1;
+      let maxVotes = 0;
       let playerToEliminate = null;
 
       Object.keys(players).forEach((id) => {
@@ -179,6 +193,10 @@ function nextScreen(){
   console.log(gamePosition.screen);
   io.emit('changeScreen', gamePosition.screen);
 
+}
+function prevPage(){
+  console.log('prevPage');
+  io.emit('prevPageForPlayer');
 }
 
 function calculatePlayerboard(){

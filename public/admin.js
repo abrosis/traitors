@@ -7,12 +7,16 @@ const messages = document.getElementById('messages');
 let buzzerPlayer = null
 
 socket.on('updatePlayers', (players) => {
- $('.players').empty();
- console.log(players);
-  Object.keys(players).forEach((id) => {
-    $('.players').append(`<li><div class='player'><span><img src='${players[id].photo}' style='width:30px;height:40px'/></span><span>${id}</span><span>${players[id].name}</span> <span>Votes: ${players[id].votes}</span><div><button onclick='toggleAlive("${id}")'>${players[id].alive ? 'Alive' : 'Dead'}</button> <button onclick='removePlayer("${id}")'>Remove</button></div></div></li>`);
-  });
-});
+  $('.players').empty();
+  console.log(players);
+   Object.keys(players).forEach((id) => {
+     $('.players').append(`<li><div class='player'><span><img src='${players[id].photo}' style='width:30px;height:40px'/></span><span>${id}</span><span>${players[id].name}</span> <span>Votes: ${players[id].votes}</span><div><button onclick='toggleAlive("${id}")'>${players[id].alive ? 'Alive' : 'Dead'}</button> <button onclick='removePlayer("${id}")'>Remove</button></div></div></li>`);
+   });
+ });
+
+ socket.on('updateMoney', (total) => {
+  $('fieldset legend').html('Prize total: £' + total);
+ });
 
 $(document).ready(() => {
   $('details').on('toggle', function() {
@@ -48,6 +52,16 @@ function getPlayers() {
   socket.emit('getPlayers');
 }
 
+function addMoney() {
+  console.log('adding money...');
+  socket.emit('addMoney');
+}
+
+function removeMoney() {
+  console.log('removing money...');
+  socket.emit('removeMoney');
+}
+
 function removePlayer(playerId) {
   console.log('Removing player ' + playerId);
   socket.emit('removePlayer', playerId);
@@ -55,6 +69,10 @@ function removePlayer(playerId) {
 function nextScreen() {
   console.log('Next Screen');
   socket.emit('nextScreen');
+}
+function prevPage() {
+  console.log('Prev Page');
+  socket.emit('prevPage');
 }
 function toggleAlive(playerId) {
   console.log('Switching team for ' + playerId);
