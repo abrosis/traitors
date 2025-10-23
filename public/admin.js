@@ -42,6 +42,14 @@ document.querySelectorAll('[data-command]').forEach((button) => {
   });
 });
 
+
+document.querySelectorAll('[data-lights]').forEach((button) => {
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    changeToScene('Living room', e.target.attributes['data-lights'].value);
+  });
+});
+
 function clearPlayers() {
   console.log('Clearing players...');
   socket.emit('clearPlayers');
@@ -77,4 +85,8 @@ function prevPage() {
 function toggleAlive(playerId) {
   console.log('Switching team for ' + playerId);
   socket.emit('toggleAlive', playerId);
+}
+
+function nextBetraylQuestion() {
+  socket.emit('nextBetraylQuestion');
 }

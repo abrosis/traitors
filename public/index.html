@@ -40,7 +40,7 @@
       <img src="images/logo.png" class="splashLogo mobileonly animate__animated animate__zoomIn" />
 
       <h1 class="mobileonly">Enter your name & photo</h1>
-      <input type="text" class="playerName mobileonly"  placeholder="Your name please...">
+      <input type="text" class="playerName mobileonly"  placeholder="Your name please..." max="10" maxlength="10" />
       <input type="file" id="photoUpload" class="photoUpload mobileonly" accept="image/*" capture="user">
       <button class="btn addPlayer mobileonly">Submit</button> 
 
@@ -132,8 +132,10 @@
     <page data-id="0">
         <ul class="playerboard displayonly"></ul>
         <h2 class="mobileonly">Please select a player</h2>
-        <ul  class="mobileonly voteforplayer">
-        </ul>
+        <div class="mobileonly voteforplayerWrapper">
+          <ul class="mobileonly voteforplayer">
+          </ul>
+        </div>
     </page>
     <page data-id="1">
       <div id="chalkboard">
@@ -204,6 +206,18 @@
   </screen>
 </game>
 
+<game id="murder4" class="game" data-enter="startMurderVideo" data-audio="bedtime">
+  <screen class="active" data-id="0">
+    <page data-id="0">
+      <div class="portrait displayonly">
+        <img src="images/murder.png"  class="animate__animated animate__fadeIn" />
+        <video class="murdervideo" src="/video/murder-4.mp4" muted></video>
+      </div>
+      <h1 class="mobileonly">Please put on your blindfold</h1>
+    </page>
+  </screen>
+</game>
+
   <game id="firepit" class="game"  data-enter="startPit" data-audio="firepit">
     <screen class="active" data-id="0">
       <page data-id="0">
@@ -232,12 +246,10 @@
     </screen>
   </game>
 
-
-
   <game id="prizetotal" class="game" data-enter="prizeTotal"  data-audio="total">
     <screen class="active" data-id="0">
       <page data-id="0">
-        <div class="countdown animate__animated animate__fadeIn">
+        <div class="totalPrize animate__animated animate__fadeIn">
           <H2>Total Prize</H2>
           <h1 class="prizeTotal">£0</h1>
         </div>
@@ -246,24 +258,126 @@
   </game>
 
 
-
-
-  <game id="blackelephant" class="game">
-    <screen class="active" data-id="0" data-audio="blackelephant">
+  <game id="misfortune" class="game">
+    <screen class="active" data-id="0" data-audio="misfortune">
       <page data-id="0">
         <div class="displayonly portrait">
-          <img src="images/game-blackelephant.png"  class="animate__animated animate__fadeIn" />
+          <img src="images/game-misfortune.png"  class="animate__animated animate__fadeIn" />
         </div>
         <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
-          <H2>Black Elephant</H2>
-          <p>Players, you will each pick a box.</p>
-          <p>In 4 boxes are gold coins, each equalling 1,000 pounds. In another 4 boxes are red coins, which will each deduct 1,000 pounds from your total. 2 boxes contain green coins which will give the players holding it shields.</p>
-          <p>For 2 rounds, you will choose to either reveal a box to remove it from the game, or steal another players box to trade it with yours.</p>
-          <p>Players must not say what is inside their box.</p>
+          <H2>Misfortune Cookie</H2>
+          <p>Players, a wheel of misfortune will spin, selecting a single player.</p>
+          <p>This player will then have the power to choose a misfortune cookie to keep or gift to another player. </p>
+          <p>The misfortune cookie will contain either cash for the prize total, or something much more sinister.</p>
+          <p>The player with the most money will gain immunity.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="wheelspin">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <h2 class="mobileonly">Please watch the screen.</h2>
+          <ul class="playerwheel displayonly">
+
+          </ul>
         </div>
       </page>
     </screen>
   </game>
+
+
+  <game id="spin" class="game">
+    <screen data-id="0" data-enter="wheelspin"  data-audio="wheelspin">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <h2 class="mobileonly">Please watch the screen.</h2>
+          <ul class="playerwheel displayonly">
+          </ul>
+          <div class="wheelSpinner displayonly">
+
+            <div class="wheelpointer">
+            </div>
+            <div class="wheel">
+            </div>
+
+          </div>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+
+  <game id="woods" class="game">
+    <screen class="active" data-id="0" data-audio="woods">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-woods.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Branches of Fate</H2>
+          <p>Players, you will embark on a journey alone through the woods, with nothing but an enchanted torch.</p>
+          <p>Hidden among the vines are cash amounts. Pick one leaf alone and return to the castle.</p>
+          <p>There is one hidden single leaf which will provide a protection from tonights murder.</p>
+          <p>You only have 5 minutes to all enter.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="timer" data-time="5">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Time Left:</H2>
+          <h1>5:00</h1>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+
+  <game id="afterbirth" class="game">
+    <screen class="active" data-id="0" data-audio="afterbirth">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-afterbirth.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Afterbirth</H2>
+          <p>Players, split into three groups and choose one person from each group as the sacrifice.</p> 
+          <p>Wrap each sacrificial player completely in the sacred gauze — <br/>every bit of it must be used to cover their body and arms.</p> 
+          <p>You will earn £1,000 for every player who is fully wrapped.</p> 
+          <p>Once wrapped, the first fully wrapped sacrifice to consume their “afterbirth” will also gain immunity or resurrection.</p> 
+          <p>You have 3 minutes to complete this task.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="timer" data-time="3">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Time Left:</H2>
+          <h1>3:00</h1>
+        </div>
+      </page>
+    </screen>
+  </game>
+
+
+
+  <game id="trials" class="game">
+    <screen class="active" data-id="0" data-audio="trials">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-trials.png"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <H2>Witch trials</H2>
+          <p>Players, one by one you will come up and recieve an accusation and then suffer a trial by jury.</p>
+          <p>The accused player will then choose their plea in secret. However, if you are a traitor, you must lie.</p>
+          <p>The other players will then choose their verdict, guilty or not guilty.</p> 
+          <p>If the consensus of the jury is correct, £1,000 will be added to the prize total.</p>
+        </div>
+      </page>
+    </screen>
+  </game>
+
 
 
   <game id="traitorshunt" class="game">
@@ -290,52 +404,95 @@
         <h2 class="firstclue">Above the lake, where we cleanse our slates, lies another clue behind your hanging face...</h2>
       </page>
     </screen>
-    <screen data-id="2" data-enter="timer" data-time="10">
+    <screen data-id="2" data-enter="timer" data-time="20">
       <page data-id="0">
         <div class="countdown animate__animated animate__fadeIn">
           <H2>Time Left:</H2>
-          <h1>10:00</h1>
+          <h1>20:00</h1>
         </div>
       </page>
     </screen>
   </game>
 
-  <game id="bangyouredead" class="game">
-    <screen class="active" data-id="0" data-audio="bangyouredead">
+  <game id="tongues" class="game">
+    <screen class="active" data-id="0" data-audio="tongues">
       <page data-id="0">
         <div class="displayonly portrait">
-          <img src="images/game-bangyouredead.png"  class="animate__animated animate__fadeIn" />
+          <img src="images/game-tongues.jpg"  class="animate__animated animate__fadeIn" />
         </div>
         <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
-          <H2>Bang! You're Dead</H2>
-          <p>Players, blindfold yourselves. For 5 rounds, two players will be picked to mark a player.</p>
-
-          <p>The marked player will then get to guess one of the players who marked them.</p>
-          <p>If correct, they can either pop that players balloon or risk guessing the other player that marked them and pop both their balloons.</p>
-
-          <p>Any players left with a balloon will be saved from murder tonight.</p>
-
-          <p>For every correct guess, you will win £2,000.</p>
+          <H2>Hidden Tongues</H2>
+          <p>Players, split up into four teams and then take a map from my beautiful famous hand.</p>
+          <p>Your map will tell you your starting location, so pick wisely.</p>
+          <p>From your starting location, solve each hidden puzzle to reveal a letter.</p>
+          <p>The letters will form a word. The first team to arrive back here to tell me the word will win.</p>
+          <p>You have 20 mins, be quick.</p>
+        </div>
+      </page>
+    </screen>
+    <screen data-id="1" data-enter="timer" data-time="20">
+      <page data-id="0">
+        <div class="countdown animate__animated animate__fadeIn">
+          <H2>Time Left:</H2>
+          <h1>20:00</h1>
         </div>
       </page>
     </screen>
   </game>
 
-  <game id="resurrection" class="game">
-    <screen class="active" data-id="0" data-audio="resurrection">
+
+  <game id="deaddance" class="game">
+    <screen class="active" data-id="0" data-audio="deaddance">
       <page data-id="0">
         <div class="displayonly portrait">
-          <img src="images/game-resurrection.png"  class="animate__animated animate__fadeIn" />
+          <img src="images/game-dance.jpg"  class="animate__animated animate__fadeIn" />
         </div>
         <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
-          <H2>Resurrection</H2>
-          <p>Players, hidden across the castle are QR codes. Each can be scanned once with your device to obtain a coin to give to a deceased player.</p>
-          <p>There is 1 shield hidden - this is your chance to get to the final faithful, don't let the traitors win. </p>
-          <p>The 2 deceased players with the most coins by the end of the game will be resurrected. You have 5 minutes - their lives count on it.</p>
+          <H2>Dead Dance</H2>
+          <p>Players, you will be asked to complete a series of dance moves with each other.</p>
+          <p>A series of dance moves will be shown on the screen. You must replicate them as a team.</p>
+          <p>A special song will be sung by a special guest.....ME</p>
         </div>
       </page>
     </screen>
-    <screen data-id="1" data-enter="timer" data-time="5">
+
+    <screen data-id="1">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-dance.jpg"  class="animate__animated animate__fadeIn" />
+        </div>
+        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
+          <p>Hello players, it's me, Claudia Winkleman! </p>
+          <p>I've never seen a bigger bunch of faggots...I mean...traitors in my life!</p>
+          <p>I'm going to begin singing now, grab a partner and get ready!</p>
+        </div>
+      </page>
+    </screen>
+
+    <screen data-id="2" data-enter="dancemoves">
+      <page data-id="0">
+        <div class="displayonly portrait" data-audio="waltz">
+          <img src="images/waltz.png" />
+        </div>
+        <div class="displayonly portrait" data-audio="twirl">
+          <img src="images/twirl.png" />
+        </div>
+        <div class="displayonly portrait" data-audio="tango">
+          <img src="images/tango.png" />
+        </div>
+        <div class="displayonly portrait" data-audio="switch">
+          <img src="images/switch.png" />
+        </div>
+      </page>
+    </screen>
+    <screen data-id="3" data-audio="theend"  data-enter="stopdancemoves">
+      <page data-id="0">
+        <div class="displayonly portrait">
+          <img src="images/game-theend.png"  class="animate__animated animate__fadeIn" />
+        </div>
+      </page>
+    </screen>
+    <screen data-id="4" data-enter="timer" data-time="5">
       <page data-id="0">
         <div class="countdown animate__animated animate__fadeIn">
           <H2>Time Left:</H2>
@@ -344,24 +501,6 @@
       </page>
     </screen>
   </game>
-    
-
-  <game id="betrayl" class="game">
-    <screen class="active" data-id="0" data-audio="betrayl">
-      <page data-id="0">
-        <div class="displayonly portrait">
-          <img src="images/game-betrayl.png"  class="animate__animated animate__fadeIn" />
-        </div>
-        <div class="instructions animate__animated animate__fadeIn animate__delay-3s">
-          <H2>Betrayl</H2>
-          <p>Players you will be asked 5 questions about the finalists. Banished or murdered players will secretly vote for which finalist they think is the answer to the question.</p>
-          <p> The finalists will then select who they think is the answer.</p> 
-          <p>For every correct match, you will win £2,000.</p>
-        </div>
-      </page>
-    </screen>
-  </game>
-    
-
+  
 </body>
 </html>

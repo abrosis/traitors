@@ -4,7 +4,7 @@ body, html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url(images/bg.jpg) repeat;
+  background: #1e3326 url(images/bg.svg) repeat;
   animation: bgAnimation 30s linear infinite;
   font-family: 'Teko', sans-serif;
 }
@@ -42,20 +42,27 @@ body:not(.display-mode) .displayonly {
 }
 
 .playerName{
-  padding: 15px 40px;
-  text-align: center;
-  font-size: 28px;
-  width: 90%;
-  border: 2px solid #4b0121;
-  font-family: 'Teko', sans-serif;
-  border-radius: 10px;
-  margin-bottom: 30px;
+padding: 15px 40px;
+    text-align: center;
+    font-size: 28px;
+    width: 90%;
+    border: 2px solid #000000;
+    font-family: 'Teko', sans-serif;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background: #00000052;
+    color: white;
+    backdrop-filter: blur(1px);
+}
+
+.playerName::placeholder {
+  color: #ffffff;
 }
 
 .btn {
-  border: 3px solid #62002b;
-  background-color: #730032;
-  background-image: linear-gradient(180deg, #ff0a76, #930845 50%, #730032 50%, #940342);
+  border: 3px solid #000000;
+  background-color: #243f20;
+  background-image: linear-gradient(180deg, #43683b, #454545 50%, #000000 50%, #243f20);
   box-shadow: 2px 2px 10px 0px #0000004d;
   font-family: 'Teko', sans-serif;
   color: #ff9d00;
@@ -168,7 +175,7 @@ h3{
 }
 
 .playerPortrait {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   width: 33vw;
   height: auto;
@@ -193,7 +200,7 @@ h3{
 }
 
 .playerPortraitBig {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1/1;
   overflow: hidden;
   width: 100%;
   height: auto;
@@ -241,6 +248,7 @@ h3{
   left: 50%;
   top: 91%;
   transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 
@@ -257,6 +265,9 @@ h3{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 5vw;
+  justify-items: center;
+  align-items: center;
+  max-width: 85%;
 }
 
 
@@ -353,6 +364,12 @@ h3{
   pointer-events: none;
 }
 
+.mobileonly.voteforplayerWrapper {
+  width: 100%;
+  overflow-x: auto;
+  max-height: 50vh;
+}
+
 .voteforplayer {
   padding: 0;
   margin:0;
@@ -414,7 +431,7 @@ h3{
 
 
 .instructions p{
-  color: #ff9792;
+  color: #c3cdb6;
   text-shadow: 0 0 10px black;
   margin: 0 0 20px 0;
   padding: 0;
@@ -426,11 +443,13 @@ h3{
   font-size: 4.5vh;
 }
 
+.totalPrize h1,
 .countdown h1{
   font-size: 22vw;
   margin: 0;
 }
 
+.totalPrize h2, 
 .countdown h2{
   margin: 0;
 }
@@ -465,12 +484,14 @@ h3{
 }
 
 input[type=file] {
-  background: white;
+    background: #00000052;
+    color: white;
+    backdrop-filter: blur(1px);
   padding: 15px 20px;
   text-align: center;
   font-size: 19px;
   width: 90%;
-  border: 2px solid #4b0121;
+    border: 2px solid #000000;
   font-family: 'Teko', sans-serif;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -478,9 +499,9 @@ input[type=file] {
 }
 
 input[type=file]::file-selector-button {
-  border: 3px solid #62002b;
-  background-color: #730032;
-  background-image: linear-gradient(180deg, #ff0a76, #930845 50%, #730032 50%, #940342);
+  border: 3px solid #000000;
+  background-color: #243f20;
+  background-image: linear-gradient(180deg, #43683b, #454545 50%, #000000 50%, #243f20);
   box-shadow: 2px 2px 10px 0px #0000004d;
   font-family: 'Teko', sans-serif;
   color: #ff9d00;
@@ -492,4 +513,110 @@ input[type=file]::file-selector-button {
   transition: all 0.5sease-in-out;
   align-self: center;
   margin-right:20px;
+}
+
+.betraylquestions h2{
+  display: none;
+}
+
+.betraylquestions h2.active{
+  display: block;
+}
+
+
+.tombstones {
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  gap: 100px;
+}
+
+.tombstones div{
+  aspect-ratio: 1/1;
+  background: url(images/tombstone.png) center no-repeat;
+  background-size: contain;
+  text-align: center;
+  padding: 50px;
+  width: 33%;
+  font-size: 4vw;
+}
+
+#spin {
+  background: url(images/bg-wheel.jpg) no-repeat center center;
+  background-size: contain;
+}
+
+#spin .playerwheel {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+#spin .playerwheel li {
+  max-width: 22%;
+  display: none;
+  position: absolute;
+}
+
+#spin .wheelSpinner {
+    width: 90vw;
+    height: 90vw;
+    position: absolute;
+    border-radius: 100%;
+    overflow: hidden;
+    z-index: -1;
+    box-shadow: 0px -9px 20px 20px #00000075;
+    top: 5vw;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#spin  .wheelpointer {
+  background-image: url(images/wheelpointer.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+    width: 10%;
+    height: 13%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#spin .wheel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-image: url(images/wheel.png);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: center;
+}
+
+#spin .spinning .wheel {
+  animation: spinAnimation 1s linear infinite;
+}
+
+@keyframes spinAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

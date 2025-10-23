@@ -71,7 +71,6 @@ socket.on('gameUpdateforPlayer', (newGamePosition) => {
   }
 });
 
-
 socket.on('prevPageForPlayer', (newGamePosition) => {
   if(!displayMode){
     $('game:visible screen.active page').hide().prev().show();
@@ -382,6 +381,135 @@ function prizeTotal() {
   $('.prizeTotal').html('£' + gamePosition.prizeTotal);
 }
 
+function wheelspin() {
+  if (!displayMode) return;
+
+  const $wheel = $('.playerwheel:visible');
+
+  // Load players on first run
+  if ($wheel.children().length === 0) {
+    $.each(gamePosition.players, function (index, player) {
+      $wheel.append(`
+        <li>
+          <div class="playerCard animate__animated animate__fadeIn" style="animation-delay:${index}s;">
+            <div class="playerPortraitBig player${player.alive ? 'Alive' : 'Dead'}">
+              <img src="${player.photo}" />
+            </div>
+            <div class="playerNameplate">${player.name}</div>
+          </div>
+        </li>
+      `);
+    });
+  }
+
+  const $items = $wheel.find('li');
+  const order = [...Array($items.length).keys()].sort(() => Math.random() - 0.5);
+
+  let current = 0;
+  const totalSpins = 20;
+  let spinDelay = 80; // starting delay (ms)
+  const spinIncrement = 25; // increase delay each round to slow down
+
+  // Hide all except first
+  $items.hide();
+  $('#spin .wheelSpinner').addClass('spinning');
+  $($items[order[0]]).fadeIn(150);
+
+  function spin() {
+    const prev = $($items[order[current % $items.length]]);
+    current++;
+
+    const next = $($items[order[current % $items.length]]);
+
+    prev.fadeOut(100, function () {
+      next.fadeIn(100);
+    });
+
+    if (current < totalSpins) {
+      spinDelay += spinIncrement;
+      setTimeout(spin, spinDelay);
+    } else {
+      // Final selection — keep last visible one shown clearly
+      next.fadeIn(300).addClass('final-selected');
+      $('#spin .wheelSpinner').removeClass('spinning');
+    }
+  }
+
+  setTimeout(spin, spinDelay);
+}
+
+function dancemoves() {
+  // clean up previous run if any
+  bgAudioPlayer.pause();
+  if (window._dancemovesInterval) {
+    clearInterval(window._dancemovesInterval);
+    window._dancemovesInterval = null;
+  }
+  if (window._dancemovesTimeout) {
+    clearTimeout(window._dancemovesTimeout);
+    window._dancemovesTimeout = null;
+  }
+  const $divs = $('game:visible screen.active page').find('div');
+  if ($divs.length === 0) return;
+
+  $divs.hide();
+  let prevIdx = -1;
+  const stepMs = 10000;     // 10 seconds per div
+  const totalMs = 90 * 1000; // 1 minute 30 seconds total
+
+  function pickNextIndex() {
+    if ($divs.length <= 1) return 0;
+    let r;
+    do {
+      r = Math.floor(Math.random() * $divs.length);
+    } while (r === prevIdx);
+    prevIdx = r;
+    return r;
+  }
+
+  function playFor(i) {
+    $divs.hide().eq(i).show();
+
+    const src = $divs.eq(i).data('audio');
+    playSoundFX(src);
+  }
+
+  // initial random pick
+  let idx = pickNextIndex();
+  playFor(idx);
+
+  window._dancemovesInterval = setInterval(() => {
+    idx = pickNextIndex();
+    playFor(idx);
+  }, stepMs);
+
+  // stop after total duration
+  window._dancemovesTimeout = setTimeout(() => {
+    if (window._dancemovesInterval) {
+      clearInterval(window._dancemovesInterval);
+      window._dancemovesInterval = null;
+    }
+    if (window._dancemovesAudio) {
+      try { window._dancemovesAudio.pause(); } catch(e) {}
+      window._dancemovesAudio = null;
+    }
+  }, totalMs);
+}
+
+function stopdancemoves() {
+  // clear running timers
+  if (window._dancemovesInterval) {
+    clearInterval(window._dancemovesInterval);
+    window._dancemovesInterval = null;
+  }
+  if (window._dancemovesTimeout) {
+    clearTimeout(window._dancemovesTimeout);
+    window._dancemovesTimeout = null;
+  }
+
+  bgAudioPlayer.play();
+}
+
 
 $('.voteforplayer').on('click', '[data-vote]', function() {
   let playerId = $(this).data('vote');
@@ -478,3 +606,26 @@ function playStartVideo() {
     }
   }
 }
+
+function resetBetrayl(){
+  $('.betraylquestions h2').removeClass('active');
+  $('.betraylquestions h2:first').addClass('active');
+}
+
+socket.on('nextBetraylQuestion', () => {
+  $('.betraylquestions h2.active').removeClass('active').next().addClass('active');
+  clearBoards();
+});
+
+function getResurrectionResults(){
+  if(displayMode){
+    socket.emit('getResurrectionResults');
+  }
+}
+
+socket.on('resurrectionResults', (results) => {
+  $('.tombstones').empty();
+  $.each(results, function(key, value) {
+    $('.tombstones').append('<div>' + key + '<br/>' + value.toFixed(2) + '%</div>');
+  });
+});

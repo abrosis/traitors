@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Soundboard</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#6ee7b7;
+      --muted:#98a0b3;
+      --glass: rgba(255,255,255,0.04);
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(2,6,23,0.6);
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071022 0%, #02111a 100%);
+      color:#e6eef8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+
+    .wrap{
+      width:min(960px,96vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:20px;
+      display:grid;
+      gap:16px;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    h1{
+      font-size:18px;
+      margin:0;
+      letter-spacing:0.2px;
+      color:#e8fef0;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .board{
+      display:flex;
+      gap:16px;
+    }
+
+    .panel{
+      background:var(--card);
+      border-radius:10px;
+      padding:12px;
+      min-height:320px;
+      flex:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .list{
+      overflow:auto;
+      padding:6px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      scrollbar-width:thin;
+      max-height:420px;
+    }
+    .list::-webkit-scrollbar{width:10px}
+    .list::-webkit-scrollbar-thumb{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius:999px;
+      border:2px solid transparent;
+      background-clip:padding-box;
+    }
+
+    .btn{
+      --p:12px 14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      background:var(--glass);
+      border-radius:10px;
+      padding:var(--p);
+      cursor:pointer;
+      user-select:none;
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      border:1px solid rgba(255,255,255,0.03);
+      color:inherit;
+    }
+    .btn:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(8,12,20,0.6) }
+    .btn:active{ transform:translateY(-1px) }
+
+    .btn .meta{
+      display:flex;
+      flex-direction:column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      text-align: left;
+      min-width:0;
+    }
+    .title{
+      font-weight:600;
+      font-size:14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .small{ font-size:12px; color:var(--muted); margin-top:4px }
+
+    .pill{
+      margin-left:auto;
+      font-size:12px;
+      padding:6px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.02);
+      color:var(--muted);
+    }
+
+    .btn.playing{
+      background:linear-gradient(90deg, rgba(110,231,183,0.12), rgba(110,231,183,0.06));
+      outline:2px solid rgba(110,231,183,0.12);
+      box-shadow:0 8px 30px rgba(110,231,183,0.09);
+    }
+
+    .controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .note{ font-size:13px; color:var(--muted) }
+
+    footer{
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* small responsive */
+    @media (max-width:720px){
+      .board{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="application" aria-label="Soundboard">
+    <header>
+      <div>
+        <h1>Claudia Soundboard</h1>
+        <div class="sub">Tap a sound to play. Tap again to stop. Buttons have source and loop params.</div>
+      </div>
+    </header>
+
+    <div class="board">
+      <div class="panel" aria-label="Sounds list">
+        <div class="controls">
+          <div class="note">Available sounds</div>
+          <div class="note">Looped sounds show "loop"</div>
+        </div>
+
+        <div class="list" id="soundList">
+          <!-- Example buttons: adjust data-src to point to your audio files -->
+          <button class="btn" data-src="audio/bg-woods.mp3" data-loop="true" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Woods Sound</div>
+              <div class="small">General sound to play while idle</div>
+            </div>
+            <div class="pill">loop</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-intro.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Claudia Intro</div>
+              <div class="small">Hello players, it's me, Claudia....</div>
+            </div>
+            <div class="pill">11s</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-sing.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Claudia Singing</div>
+              <div class="small">A beautiful song by Claudia</div>
+            </div>
+            <div class="pill">2.55m</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-outro.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Claudia - outro</div>
+              <div class="small">Tell players the actual task....</div>
+            </div>
+            <div class="pill">loop</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-welldone.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Claudia - Well done</div>
+              <div class="small">If players pick correctly</div>
+            </div>
+            <div class="pill">short</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-badluck.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Claudia - Incorrect</div>
+              <div class="small">If players pick incorrectly</div>
+            </div>
+            <div class="pill">loop</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-cunts.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Hello you Cunts</div>
+              <div class="small">Claudia says cunt</div>
+            </div>
+            <div class="pill">short</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-headshoulders.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Head and Shoulders</div>
+              <div class="small">Shampoo advert</div>
+            </div>
+            <div class="pill">short</div>
+          </button>
+
+          <button class="btn" data-src="audio/claudia-theland.mp3" data-loop="false" aria-pressed="false">
+            <div class="meta">
+              <div class="title">Honey....The Land</div>
+              <div class="small">Honey the land meme</div>
+            </div>
+            <div class="pill">short</div>
+          </button>
+
+        </div>
+
+        <footer>Place your audio files in a sounds/ folder or change data-src paths.</footer>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Soundboard logic
+    // Each button has data-src and data-loop attributes.
+    // Clicking toggles play/stop and highlights the button while active.
+
+    (function(){
+      const list = document.getElementById('soundList');
+      // Map button -> audio element
+      const audioMap = new WeakMap();
+
+      function createAudio(src, loop){
+        const a = new Audio(src);
+        a.preload = 'auto';
+        a.loop = loop === 'true' || loop === true;
+        a.crossOrigin = 'anonymous';
+        return a;
+      }
+
+      // handle click on the list (event delegation)
+      list.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('.btn');
+        if (!btn || !list.contains(btn)) return;
+
+        const src = btn.dataset.src;
+        const loop = btn.dataset.loop === 'true';
+
+        // create audio if missing
+        let audio = audioMap.get(btn);
+        if (!audio) {
+          audio = createAudio(src, loop);
+          // when audio ends (for non-looping) remove playing state
+          audio.addEventListener('ended', () => {
+            btn.classList.remove('playing');
+            btn.setAttribute('aria-pressed','false');
+          });
+          audioMap.set(btn, audio);
+        }
+
+        // Toggle play/pause
+        if (!audio.paused && !audio.ended) {
+          // Stop it
+          audio.pause();
+          audio.currentTime = 0;
+          btn.classList.remove('playing');
+          btn.setAttribute('aria-pressed','false');
+        } else {
+          // Play
+          // Ensure loop flag reflects the button data (in case it was changed)
+          audio.loop = loop;
+          // try to play; handle promise for modern browsers
+          const playPromise = audio.play();
+          if (playPromise && typeof playPromise.then === 'function') {
+            playPromise.then(() => {
+              btn.classList.add('playing');
+              btn.setAttribute('aria-pressed','true');
+            }).catch((e) => {
+              // Autoplay restrictions may block play until user interacts with page.
+              console.warn('Play blocked:', e);
+            });
+          } else {
+            btn.classList.add('playing');
+            btn.setAttribute('aria-pressed','true');
+          }
+        }
+      });
+
+
+    })();
+  </script>
+</body>
+</html>

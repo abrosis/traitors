@@ -20,6 +20,8 @@ document.querySelectorAll('.drawingCanvas').forEach(canvas => {
     resizeCanvas();
   }
 
+  initCanvas(); // Call it directly instead of using window.onload
+
   // Mouse Events
   canvas.addEventListener('mousedown', (e) => startDrawing(e.clientX, e.clientY));
   canvas.addEventListener('mouseup', stopDrawing);
@@ -66,12 +68,4 @@ document.querySelectorAll('.drawingCanvas').forEach(canvas => {
   // Add clearCanvas to the canvas element
   canvas.clearCanvas = clearCanvas;
 
-  // Convert to Base64
-  function downloadBase64() {
-    const base64Image = canvas.toDataURL('image/png');
-    document.getElementById('base64Output').innerText = base64Image;
-  }
-
-  // Initialize on load
-  window.onload = initCanvas;
 });

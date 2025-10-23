@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <!-- <link rel="manifest" href="/manifest.json"> -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Game Show">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer type="application/javascript" src="qr.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>The Traitors</title>
+</head>
+<body>
+
+
+
+  <game id="unclaimed">
+    <screen class="active" data-id="0">
+      <page class="active" data-id="0">
+        <h1>You found a coin! <br/> Please select a player:</h1>
+        <button class="btn" onclick="claimQR('Player 1')">Player 1</button>
+        <button class="btn" onclick="claimQR('Player 2')">Player 2</button>
+        <button class="btn" onclick="claimQR('Player 3')">Player 3</button>
+      </page>
+    </screen>
+  </game>
+
+  <game id="claimed">
+    <screen class="active" data-id="0">
+      <page class="active" data-id="0">
+        <h1>This code has been claimed.</h1>
+      </page>
+    </screen>
+  </game>
+    
+
+</body>
+</html>

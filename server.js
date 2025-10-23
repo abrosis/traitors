@@ -23,7 +23,7 @@ const cors = require('cors');
   const app = express();
   const server = http.createServer(app);
   const io = socketIo(server);
-  
+
   app.use(express.static('public'));
 // }
 
@@ -37,6 +37,19 @@ let gamePosition = {
   screen: 0,
   json: {},
 };
+
+let qrcodes = {
+  '1000': '',
+  '2000': '',
+  '3000': '',
+  '4000': '',
+  '5000': '',
+  '6000': '',
+  '7000': '',
+  '8000': '',
+  '9000': '',
+  '10000': '',
+}
 
 
 
@@ -76,6 +89,48 @@ io.on('connection', (socket) => {
     io.emit('updatePlayers', players);
   });
 
+  
+  // Vote for a player
+  socket.on('scarQR', (code) => {
+    if(qrcodes[code]==''){
+      io.emit('claimed', false);
+    }else{
+      io.emit('claimed', true);
+    }
+  });
+  
+  // Vote for a player
+  socket.on('claimQR', (code, playerNumber) => {
+    if(qrcodes[code]==''){
+      qrcodes[code] = playerNumber;
+      io.emit('claimed', true);
+    }else{
+      io.emit('claimed', false);
+    }
+  });
+
+  // Vote for a player
+  socket.on('getResurrectionResults', () => {
+
+
+    let totalCodes = 0;
+    let codeCounts = {"Player 1": 0, "Player 2": 0, "Player 3": 0};
+
+    Object.values(qrcodes).forEach(code => {
+      if (code) {
+        totalCodes++;
+        codeCounts[code]++;
+      }
+    });
+
+    let codePercentages = {};
+    Object.keys(codeCounts).forEach(code => {
+      codePercentages[code] = (codeCounts[code] / totalCodes) * 100;
+    });
+
+    io.emit('resurrectionResults', codePercentages);
+  });
+
   // Fire Pit Functions
   
   socket.on('gameContinue', (game) => {
@@ -105,6 +160,10 @@ io.on('connection', (socket) => {
   socket.on('getGame', () => {
     console.log('Updating user game position');
     io.emit('gameUpdate', gamePosition);
+  });
+
+  socket.on('nextBetraylQuestion', () => {
+    io.emit('nextBetraylQuestion');
   });
 
 
@@ -207,4 +266,4 @@ function calculatePlayerboard(){
   return playerboard;
 }
 
-server.listen(8080, () => console.log('Server listening on port 8080'));
+server.listen(8080, '0.0.0.0', () => console.log('Server listening on port 8080'));

@@ -15,6 +15,7 @@
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="msapplication-config" content="/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <script defer type="application/javascript" src="hue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="admin.js"></script>
@@ -139,79 +140,99 @@
   <summary>DAY 1</summary>
   <div>
   <button data-command="playerName">Player Name </button>
-  <button data-command="start">Start Screen</button>
+  <button data-command="start" data-lights="breakfast">Start Screen</button>
   <button data-command="playerboard"> Playerboard </button>
   <button data-command="roundtable">Traitor Selection</button>
-  <button data-command="mission">Mission</button>
-  <button data-command="blackelephant">GAME 1: Black Elephant</button>
+  <button data-command="mission" data-lights="mission">Mission</button>
+  <button data-command="misfortune">GAME 1: Misfortune Cookie</button>
+  <button data-command="spin">Spin the wheel</button> 
   <button data-command="dinner">Dinner</button>
-  <button data-command="roundtable">Round Table</button>
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
   <button data-command="banishment">Banishment</button>
   <button data-command="prizetotal">Prize total</button>
-  <button data-command="bedtime">Bedtime</button>
+  <button data-command="bedtime" data-lights="murder">Bedtime</button>
 </div>
 </details>
 <details>
   <summary>DAY 2</summary>
   <div>
-  <button data-command="breakfast">Breakfast</button>
+  <button data-command="breakfast" data-lights="breakfast">Breakfast</button>
   <button onclick="nextScreen()">Playerboard</button>
-  <button data-command="mission">Mission</button>
-  <button data-command="traitorshunt">GAME 2: Traitors Hunt</button>
-  <button onclick="nextScreen()">GAME 2: Charlotte</button> 
-  <button onclick="nextScreen()">GAME 2: 10 Minute Timer</button> 
+  <button data-command="mission" data-lights="mission">Mission</button>
+  <button data-command="woods">GAME 2: Branches of Fate</button>
+  <button onclick="nextScreen()">GAME 2: 5 Minute Timer</button>
   <button data-command="dinner">Dinner</button>
-  <button data-command="roundtable">Round Table</button>
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
   <button data-command="banishment">Banishment</button>
   <button data-command="prizetotal">Prize total</button>
-  <button data-command="murder1">Murder</button>
+  <button data-command="murder1" data-lights="murder">Murder</button>
 </div>
 </details>
 <details>
   <summary>DAY 3</summary>
   <div>
-  <button data-command="breakfast">Breakfast</button>
+  <button data-command="breakfast" data-lights="breakfast">Breakfast</button>
   <button onclick="nextScreen()">Playerboard</button>
-  <button data-command="mission">Mission</button>
-  <button data-command="bangyouredead">GAME 3: Bang You're Dead</button>
+  <button data-command="mission" data-lights="mission">Mission</button>
+  <button data-command="trials">GAME 3: Witch Trials</button>
   <button data-command="dinner">Dinner</button>
-  <button data-command="roundtable">Round Table</button>
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
   <button data-command="banishment">Banishment</button>
   <button data-command="prizetotal">Prize total</button>
-  <button data-command="murder2">Murder</button>
+  <button data-command="murder2" data-lights="murder">Murder</button>
 </div>
 </details>
 
 <details>
   <summary>DAY 4</summary>
   <div>
-  <button data-command="breakfast">Breakfast</button>
+  <button data-command="breakfast" data-lights="breakfast">Breakfast</button>
   <button onclick="nextScreen()">Playerboard</button>
-  <button data-command="mission">Mission</button>
-  <button data-command="resurrection">GAME 4: Resurrection</button> //TODO
-  <button onclick="nextScreen()">GAME 4: 5 Minute Timer</button> 
+  <button data-command="mission" data-lights="mission">Mission</button>
+  <button data-command="deaddance">GAME 4: Dead dance</button> 
+  <button onclick="nextScreen()">GAME 4: Reveal Claudia Bot (use bot)</button> 
+  <button onclick="nextScreen()">GAME 4: START Dead dance</button> 
+  <button onclick="nextScreen()">GAME 4: END Dead dance (use bot)</button> 
+  <button onclick="nextScreen()">GAME 4: Start Timer</button> 
   <button data-command="dinner">Dinner</button>
-  <button data-command="roundtable">Round Table</button>
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
   <button data-command="banishment">Banishment</button>
   <button data-command="prizetotal">Prize total</button>
-  <button data-command="murder3">Murder</button>
+  <button data-command="murder3" data-lights="murder">Murder</button>
 </div>
 </details>
 <details>
   <summary>DAY 5</summary>
   <div>
-  <button data-command="breakfast">Breakfast</button>
+  <button data-command="breakfast" data-lights="breakfast">Breakfast</button>
   <button onclick="nextScreen()">Playerboard</button>
-  <button data-command="mission">Mission</button>
-  <button data-command="betrayl">GAME 5: Betrayl</button> //TODO
-  <button data-command="dinner">Dinner</button>
-  <button data-command="roundtable">Round Table</button>
+  <button data-command="mission" data-lights="mission">Mission</button>
+  <button data-command="afterbirth">GAME 5: Afterbirth</button> 
+  <button onclick="nextScreen()">GAME 5: 3 Minute Timer</button> 
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
   <button data-command="vote">Vote</button>
-  <button data-command="firepit">The Final</button>
+  <button data-command="banishment">Banishment</button>
+  <button data-command="prizetotal">Prize total</button>
+  <button data-command="murder4" data-lights="murder">Murder</button>
+  </div>
+</details>
+<details>
+  <summary>DAY 6</summary>
+  <div>
+  <button data-command="breakfast" data-lights="breakfast">Breakfast</button>
+  <button onclick="nextScreen()">Playerboard</button>
+  <button data-command="mission" data-lights="mission">Mission</button> 
+  <button data-command="tongues">GAME 6: Hidden Tongues</button>
+  <button onclick="nextScreen()">GAME 6: 20 Minute Timer</button>
+  <button data-command="prizetotal">Prize total</button>
+  <button data-command="dinner">Dinner</button>
+  <button data-command="roundtable" data-lights="roundtable">Round Table</button>
+  <button data-command="vote">Vote</button>
+  <button data-command="firepit" data-lights="final">The Final</button>
   <button onclick="nextScreen()">Start fire pit</button>
   <button onclick="prevPage()">New fire round</button>
   <button data-command="prizetotal">Prize total</button>

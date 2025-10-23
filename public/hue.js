@@ -93,6 +93,46 @@ async function changeHueColor(groupName, hexColor, duration) {
         console.error("Error controlling Hue lights:", error);
     }
 }
+// Change to a specific scene
+async function changeToScene(groupName, sceneName) {
+    const HUE_BRIDGE_IP = "192.168.1.221";
+    const HUE_USERNAME = "1GZa8Kfi9w1j44fuD8HXdk-esGjVCMb7KmZs8dBR";
+
+    // Get group ID from group name
+    async function getGroupId(groupName) {
+        const response = await fetch(`http://${HUE_BRIDGE_IP}/api/${HUE_USERNAME}/groups`);
+        const groups = await response.json();
+        for (const [id, group] of Object.entries(groups)) {
+            if (group.name === groupName) return id;
+        }
+        throw new Error(`Group "${groupName}" not found.`);
+    }
+
+    // Get scene ID from scene name
+    async function getSceneId(sceneName) {
+        const response = await fetch(`http://${HUE_BRIDGE_IP}/api/${HUE_USERNAME}/scenes`);
+        const scenes = await response.json();
+        for (const [id, scene] of Object.entries(scenes)) {
+            if (scene.name === sceneName) return id;
+        }
+        throw new Error(`Scene "${sceneName}" not found.`);
+    }
+
+    try {
+        const groupId = await getGroupId(groupName);
+        const sceneId = await getSceneId(sceneName);
+
+        // Activate the scene
+        await fetch(`http://${HUE_BRIDGE_IP}/api/${HUE_USERNAME}/groups/${groupId}/action`, {
+            method: "PUT",
+            body: JSON.stringify({ scene: sceneId }),
+        });
+    } catch (error) {
+        console.error("Error changing to scene:", error);
+    }
+}
+
+// Example usage: Change 'Living Room' lights to 'Relax' scene
 
 // Example usage: Change 'Living Room' lights to red for 5 seconds
 
